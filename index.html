@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Contador Proyecto PSH</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: transparent;
+      color: #333;
+    }
+
+    .contador {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .titulo {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .contenedor {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .bloque {
+      min-width: 150px;
+      padding: 18px 25px;
+      border-radius: 12px;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .numero {
+      font-size: 42px;
+      font-weight: bold;
+      color: #1677a8;
+      line-height: 1.1;
+    }
+
+    .etiqueta {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="contador">
+
+    <div class="titulo">
+      PROYECTO PSH
+    </div>
+
+    <div class="contenedor">
+
+      <div class="bloque">
+        <div class="numero" id="transcurridos">0</div>
+        <div class="etiqueta">Días transcurridos</div>
+      </div>
+
+      <div class="bloque">
+        <div class="numero" id="restantes">0</div>
+        <div class="etiqueta">Días restantes</div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    // ==============================
+    // FECHAS DEL PROYECTO
+    // ==============================
+
+    const fechaInicio = new Date("2026-08-26T00:00:00");
+    const fechaFin = new Date("2033-08-26T00:00:00");
+
+
+    // ==============================
+    // CALCULAR DIAS
+    // ==============================
+
+    function actualizarContador() {
+
+      const ahora = new Date();
+
+      const milisegundosPorDia = 1000 * 60 * 60 * 24;
+
+      let diasTranscurridos =
+        Math.floor((ahora - fechaInicio) / milisegundosPorDia);
+
+      let diasRestantes =
+        Math.ceil((fechaFin - ahora) / milisegundosPorDia);
+
+
+      // Evitar valores negativos
+
+      if (diasTranscurridos < 0) {
+        diasTranscurridos = 0;
+      }
+
+      if (diasRestantes < 0) {
+        diasRestantes = 0;
+      }
+
+
+      // Mostrar números
+
+      document.getElementById("transcurridos").textContent =
+        diasTranscurridos.toLocaleString("es-ES");
+
+      document.getElementById("restantes").textContent =
+        diasRestantes.toLocaleString("es-ES");
+    }
+
+
+    // Ejecutar inmediatamente
+
+    actualizarContador();
+
+
+    // Actualizar cada minuto
+
+    setInterval(actualizarContador, 60000);
+  </script>
+
+</body>
+</html>
